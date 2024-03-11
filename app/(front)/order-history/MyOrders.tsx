@@ -18,40 +18,33 @@ export default function MyOrders() {
   if (!mounted) return <></>
 
   if (error) return 'An error has occurred.'
-  if (!orders) return 'Loading...'
+  if (!orders) return 'Завантаження...'
 
   return (
-    <div className="overflow-x-auto">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>DATE</th>
-            <th>TOTAL</th>
-            <th>PAID</th>
-            <th>DELIVERED</th>
-            <th>ACTION</th>
+    <div className="max-w-screen-2xl mx-auto px-5">
+      <table className="w-full">
+        <thead className="p-3">
+          <tr className="text-left bg-secondary">
+            <th className="p-3">Дата</th>
+            <th className="p-3">Загалом</th>
+            <th className="p-3">Доставка</th>
+            <th className="p-3">Дії</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-primary-foreground">
           {orders.map((order: Order) => (
             <tr key={order._id}>
-              <td>{order._id.substring(20, 24)}</td>
-              <td>{order.createdAt.substring(0, 10)}</td>
-              <td>${order.totalPrice}</td>
-              <td>
-                {order.isPaid && order.paidAt
-                  ? `${order.paidAt.substring(0, 10)}`
-                  : 'not paid'}
-              </td>
-              <td>
+              <td  className="p-3">{order._id.substring(20, 24)}</td>
+              <td className="p-3">{order.createdAt.substring(0, 10)}</td>
+              <td className="p-3">₴{order.totalPrice}</td>
+              <td className="p-3">
                 {order.isDelivered && order.deliveredAt
                   ? `${order.deliveredAt.substring(0, 10)}`
-                  : 'not delivered'}
+                  : 'Не доставлено'}
               </td>
-              <td>
+              <td className="p-3">
                 <Link href={`/order/${order._id}`} passHref>
-                  Details
+                  Деталі
                 </Link>
               </td>
             </tr>

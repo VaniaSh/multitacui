@@ -43,7 +43,7 @@ const Dashboard = () => {
   const { data: summary, error } = useSWR(`/api/admin/orders/summary`)
 
   if (error) return error.message
-  if (!summary) return 'Loading...'
+  if (!summary) return 'Завантаження...'
 
   const salesData = {
     labels: summary.salesData.map((x: { _id: string }) => x._id),
@@ -53,20 +53,6 @@ const Dashboard = () => {
         label: 'Sales',
         data: summary.salesData.map(
           (x: { totalSales: number }) => x.totalSales
-        ),
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  }
-  const ordersData = {
-    labels: summary.salesData.map((x: { _id: string }) => x._id),
-    datasets: [
-      {
-        fill: true,
-        label: 'Orders',
-        data: summary.salesData.map(
-          (x: { totalOrders: number }) => x.totalOrders
         ),
         borderColor: 'rgb(53, 162, 235)',
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
@@ -100,74 +86,51 @@ const Dashboard = () => {
       },
     ],
   }
-  const usersData = {
-    labels: summary.usersData.map((x: { _id: string }) => x._id), // 2022/01 2022/03
-    datasets: [
-      {
-        label: 'Users',
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        data: summary.usersData.map(
-          (x: { totalUsers: number }) => x.totalUsers
-        ),
-      },
-    ],
-  }
 
   return (
     <div>
-      <div className="my-4 stats inline-grid md:flex  shadow stats-vertical   md:stats-horizontal">
-        <div className="stat">
-          <div className="stat-title">Sales</div>
-          <div className="stat-value text-primary">
-            ${formatNumber(summary.ordersPrice)}
+      <div className="flex justify-between bg-primary-foreground border-secondary mt-4 rounded-md px-3">
+        <div className="flex flex-col gap-y-2 p-3">
+          <div className="text-xl">Продажі</div>
+          <div className="text-xl font-semibold text-orange-500">
+            ₴{formatNumber(summary.ordersPrice)}
           </div>
-          <div className="stat-desc">
-            <Link href="/admin/orders">View sales</Link>
-          </div>
-        </div>
-        <div className="stat">
-          <div className="stat-title"> Orders</div>
-          <div className="stat-value text-primary">{summary.ordersCount}</div>
-          <div className="stat-desc">
-            <Link href="/admin/orders">View orders</Link>
+          <div className="text-base font-light hover:underline">
+            <Link href="/admin/orders">Переглянути</Link>
           </div>
         </div>
-        <div className="stat">
-          <div className="stat-title">Products</div>
-          <div className="stat-value text-primary">{summary.productsCount}</div>
-          <div className="stat-desc">
-            <Link href="/admin/products">View products</Link>
+        <div className="flex flex-col gap-y-2 p-3">
+          <div className="text-xl">Замовлення</div>
+          <div className="text-xl font-semibold text-orange-500">{summary.ordersCount}</div>
+          <div className="text-base font-light hover:underline">
+            <Link href="/admin/orders">Переглянути</Link>
           </div>
         </div>
-        <div className="stat">
-          <div className="stat-title">Users</div>
-          <div className="stat-value text-primary">{summary.usersCount}</div>
-          <div className="stat-desc">
-            <Link href="/admin/users">View users</Link>
+        <div className="flex flex-col gap-y-2 p-3">
+          <div className="text-xl">Товари</div>
+          <div className="text-xl font-semibold text-orange-500">{summary.productsCount}</div>
+          <div className="text-base font-light hover:underline">
+            <Link href="/admin/products">Переглянути</Link>
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-2 p-3">
+          <div className="text-xl">Користувачі</div>
+          <div className="text-xl font-semibold text-orange-500">{summary.usersCount}</div>
+          <div className="text-base font-light hover:underline">
+            <Link href="/admin/users">Переглянути</Link>
           </div>
         </div>
       </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <h2 className="text-xl py-2">Sales Report</h2>
-          <Line data={salesData} />
+      <div className="grid md:grid-cols-2 gap-4 mt-4">
+        <div className="bg-primary-foreground rounded">
+          <h2 className="text-xl p-2">Статистика продажів</h2>
+          <Line data={salesData}/>
         </div>
-        <div>
-          <h2 className="text-xl py-2">Orders Report</h2>
-          <Line data={ordersData} />
-        </div>
-      </div>
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <h2 className="text-xl py-2">Products Report</h2>
+        <div className="bg-primary-foreground rounded">
+          <h2 className="text-xl p-2">Товари</h2>
           <div className="flex items-center justify-center h-80 w-96 ">
-            <Doughnut data={productsData} />
+            <Doughnut data={productsData}/>
           </div>
-        </div>
-        <div>
-          <h2 className="text-xl py-2">Users Report</h2>
-          <Bar data={usersData} />
         </div>
       </div>
     </div>

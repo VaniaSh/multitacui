@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import { User } from '@/lib/models/UserModel'
 import { formatId } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 export default function UserEditForm({ userId }: { userId: string }) {
   const { data: user, error } = useSWR(`/api/admin/users/${userId}`)
@@ -63,11 +65,11 @@ export default function UserEditForm({ userId }: { userId: string }) {
     pattern?: ValidationRule<RegExp>
   }) => (
     <div className="md:flex my-3">
-      <label className="label md:w-1/5" htmlFor={id}>
+      <label className="text-base md:w-1/5" htmlFor={id}>
         {name}
       </label>
       <div className="md:w-4/5">
-        <input
+        <Input
           type="text"
           id={id}
           {...register(id, {
@@ -85,15 +87,15 @@ export default function UserEditForm({ userId }: { userId: string }) {
 
   return (
     <div>
-      <h1 className="text-2xl py-4">Edit User {formatId(userId)}</h1>
-      <div>
+      <h1 className="bg-primary-foreground rounded p-3 text-2xl py-4 mt-4">Редагувати Користувача {formatId(userId)}</h1>
+      <div className="bg-primary-foreground rounded p-3 mt-5">
         <form onSubmit={handleSubmit(formSubmit)}>
-          <FormInput name="Name" id="name" required />
+          <FormInput name="Імʼя" id="name" required />
           <FormInput name="Email" id="email" required />
 
           <div className="md:flex my-3">
             <label className="label md:w-1/5" htmlFor="isAdmin">
-              Admin
+              Профіль адміністратора
             </label>
             <div className="md:w-4/5">
               <input
@@ -105,17 +107,18 @@ export default function UserEditForm({ userId }: { userId: string }) {
             </div>
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={isUpdating}
-            className="btn btn-primary"
           >
             {isUpdating && <span className="loading loading-spinner"></span>}
             Update
-          </button>
-          <Link className="btn ml-4" href="/admin/users">
-            Cancel
-          </Link>
+          </Button>
+          <Button className="ml-4 mt-5" variant={'destructive'}>
+            <Link href="/admin/users">
+              Cancel
+            </Link>
+          </Button>
         </form>
       </div>
     </div>

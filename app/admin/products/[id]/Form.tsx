@@ -8,6 +8,8 @@ import { useEffect } from 'react'
 import { Product } from '@/lib/models/ProductModel'
 import { formatId } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 export default function ProductEditForm({ productId }: { productId: string }) {
   const { data: product, error } = useSWR(`/api/admin/products/${productId}`)
@@ -25,7 +27,7 @@ export default function ProductEditForm({ productId }: { productId: string }) {
       const data = await res.json()
       if (!res.ok) return toast.error(data.message)
 
-      toast.success('Product updated successfully')
+      toast.success('Товар успішно оновлено')
       router.push('/admin/products')
     }
   )
@@ -54,7 +56,7 @@ export default function ProductEditForm({ productId }: { productId: string }) {
   }
 
   if (error) return error.message
-  if (!product) return 'Loading...'
+  if (!product) return 'Завантаження...'
 
   const FormInput = ({
     id,
@@ -72,14 +74,14 @@ export default function ProductEditForm({ productId }: { productId: string }) {
         {name}
       </label>
       <div className="md:w-4/5">
-        <input
+        <Input
           type="text"
+          className="border-secondary"
           id={id}
           {...register(id, {
             required: required && `${name} is required`,
             pattern,
           })}
-          className="input input-bordered w-full max-w-md"
         />
         {errors[id]?.message && (
           <div className="text-error">{errors[id]?.message}</div>
@@ -89,7 +91,7 @@ export default function ProductEditForm({ productId }: { productId: string }) {
   )
 
   const uploadHandler = async (e: any) => {
-    const toastId = toast.loading('Uploading image...')
+    const toastId = toast.loading('Картинка Завантажується...')
     try {
       const resSign = await fetch('/api/cloudinary-sign', {
         method: 'POST',
@@ -110,7 +112,7 @@ export default function ProductEditForm({ productId }: { productId: string }) {
       )
       const data = await res.json()
       setValue('image', data.secure_url)
-      toast.success('File uploaded successfully', {
+      toast.success('Успішно', {
         id: toastId,
       })
     } catch (err: any) {
@@ -122,42 +124,59 @@ export default function ProductEditForm({ productId }: { productId: string }) {
 
   return (
     <div>
-      <h1 className="text-2xl py-4">Edit Product {formatId(productId)}</h1>
-      <div>
+      <h1 className="text-2xl py-4 bg-primary-foreground px-4 mb-2 rounded mt-4">Редагувати {formatId(productId)}</h1>
+      <div className="bg-primary-foreground p-3 rounded">
         <form onSubmit={handleSubmit(formSubmit)}>
-          <FormInput name="Name" id="name" required />
-          <FormInput name="Slug" id="slug" required />
-          <FormInput name="Image" id="image" required />
+          <div className="w-[600px]">
+            <FormInput name="Назва товару" id="name" required />
+          </div>
+          <div className="w-[600px]">
+            <FormInput name="Slug" id="slug" required />
+          </div>
+          <div className="w-[600px]">
+            <FormInput name="Картинка" id="image" required />
+          </div>
           <div className="md:flex mb-6">
             <label className="label md:w-1/5" htmlFor="imageFile">
-              Upload Image
+              Загрузити Картинку
             </label>
             <div className="md:w-4/5">
               <input
                 type="file"
-                className="file-input w-full max-w-md"
+                className="max-w-md"
                 id="imageFile"
                 onChange={uploadHandler}
               />
             </div>
           </div>
-          <FormInput name="Price" id="price" required />
-          <FormInput name="Category" id="category" required />
-          <FormInput name="Brand" id="brand" required />
-          <FormInput name="Description" id="description" required />
-          <FormInput name="Count In Stock" id="countInStock" required />
-
-          <button
+          <div className="w-[600px]">
+            <FormInput name="Ціна" id="price" required />
+          </div>
+         <div className="w-[600px]">
+           <FormInput name="Категорія" id="category" required />
+         </div>
+         <div className="w-[600px]">
+           <FormInput name="Брент" id="brand" required />
+         </div>
+          <div className="w-[600px]">
+            <FormInput name="Опис" id="description" required />
+          </div>
+          <div className="w-[600px]">
+            <FormInput name="Кількість" id="countInStock" required />
+          </div>
+          <Button
             type="submit"
             disabled={isUpdating}
-            className="btn btn-primary"
+            className="mr-4"
           >
             {isUpdating && <span className="loading loading-spinner"></span>}
-            Update
-          </button>
-          <Link className="btn ml-4 " href="/admin/products">
-            Cancel
-          </Link>
+            Підтвердити
+          </Button>
+          <Button variant={'destructive'}>
+            <Link href="/admin/products">
+              Скасувати
+            </Link>
+          </Button>
         </form>
       </div>
     </div>

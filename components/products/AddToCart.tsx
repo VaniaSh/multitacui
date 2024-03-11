@@ -1,38 +1,21 @@
 'use client'
 import useCartService from '@/lib/hooks/useCartStore'
-import { OrderItem } from '@/lib/models/OrderModel'
-import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import {OrderItem} from '@/lib/models/OrderModel'
+import {Button} from "@/components/ui/button";
+import { toast } from "sonner"
 
-export default function AddToCart({ item }: { item: OrderItem }) {
-  const router = useRouter()
-  const { items, increase, decrease } = useCartService()
-  const [existItem, setExistItem] = useState<OrderItem | undefined>()
+export default function AddToCart({item}: { item: OrderItem }) {
+    const {increase} = useCartService()
 
-  useEffect(() => {
-    setExistItem(items.find((x) => x.slug === item.slug))
-  }, [item, items])
-
-  const addToCartHandler = () => {
-    increase(item)
-  }
-  return existItem ? (
-    <div>
-      <button className="btn" type="button" onClick={() => decrease(existItem)}>
-        -
-      </button>
-      <span className="px-2">{existItem.qty}</span>
-      <button className="btn" type="button" onClick={() => increase(existItem)}>
-        +
-      </button>
-    </div>
-  ) : (
-    <button
-      className="btn btn-primary w-full"
-      type="button"
-      onClick={addToCartHandler}
+    const addToCartHandler = () => {
+        increase(item)
+        toast.success('Успішно додано до корзини')
+    }
+    return <Button
+        variant={'default'}
+        type="button"
+        onClick={addToCartHandler}
     >
-      Add to cart
-    </button>
-  )
+        Додати до корзини
+    </Button>
 }

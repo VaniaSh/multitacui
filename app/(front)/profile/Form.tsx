@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
+import {Input} from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
 
 type Inputs = {
   name: string
@@ -75,31 +77,30 @@ const Form = () => {
     }
   }
   return (
-    <div className="max-w-sm  mx-auto card bg-base-300 my-4">
-      <div className="card-body">
-        <h1 className="card-title">Profile</h1>
-        <form onSubmit={handleSubmit(formSubmit)}>
+    <div className="max-w-screen-2xl mx-auto  my-4">
+      <div className="border-secondary border bg-primary-foreground mx-auto rounded-md w-1/2 p-5">
+        <h1 className="text-2xl font-semibold mb-5">Профіль</h1>
+        <form className="space-y-4" onSubmit={handleSubmit(formSubmit)}>
           <div className="my-2">
-            <label className="label" htmlFor="name">
-              Name
+            <label className="text-sm" htmlFor="name">
+              Імʼя
             </label>
-            <input
+            <Input
               type="text"
               id="name"
               {...register('name', {
                 required: 'Name is required',
               })}
-              className="input input-bordered w-full max-w-sm"
             />
             {errors.name?.message && (
               <div className="text-error">{errors.name.message}</div>
             )}
           </div>
           <div className="my-2">
-            <label className="label" htmlFor="email">
+            <label className="text-sm" htmlFor="email">
               Email
             </label>
-            <input
+            <Input
               type="text"
               id="email"
               {...register('email', {
@@ -109,31 +110,29 @@ const Form = () => {
                   message: 'Email is invalid',
                 },
               })}
-              className="input input-bordered w-full max-w-sm"
             />
             {errors.email?.message && (
               <div className="text-error">{errors.email.message}</div>
             )}
           </div>
           <div className="my-2">
-            <label className="label" htmlFor="password">
-              New Password
+            <label className="text-sm" htmlFor="password">
+              Новий пароль
             </label>
-            <input
+            <Input
               type="password"
               id="password"
               {...register('password', {})}
-              className="input input-bordered w-full max-w-sm"
             />
             {errors.password?.message && (
               <div className="text-error">{errors.password.message}</div>
             )}
           </div>
           <div className="my-2">
-            <label className="label" htmlFor="confirmPassword">
-              Confirm New Password
+            <label className="text-sm" htmlFor="confirmPassword">
+              Повторіть новий пароль
             </label>
-            <input
+            <Input
               type="password"
               id="confirmPassword"
               {...register('confirmPassword', {
@@ -142,7 +141,6 @@ const Form = () => {
                   return password === value || 'Passwords should match!'
                 },
               })}
-              className="input input-bordered w-full max-w-sm"
             />
             {errors.confirmPassword?.message && (
               <div className="text-error">{errors.confirmPassword.message}</div>
@@ -150,16 +148,15 @@ const Form = () => {
           </div>
 
           <div className="my-2">
-            <button
+            <Button
               type="submit"
               disabled={isSubmitting}
-              className="btn btn-primary w-full"
             >
               {isSubmitting && (
                 <span className="loading loading-spinner"></span>
               )}
-              Update
-            </button>
+              Оновити дані
+            </Button>
           </div>
         </form>
       </div>

@@ -21,40 +21,40 @@ const AdminLayout = async ({
   }
 
   return (
-    <div className="relative flex flex-grow">
+    <div className="relative flex flex-grow p-3">
       <div className="w-full grid md:grid-cols-5">
-        <div className="bg-base-200">
-          <ul className="menu">
+        <div className="bg-primary-foreground rounded-md p-3">
+          <ul className="flex flex-col gap-y-4">
             <li>
               <Link
-                className={'dashboard' === activeItem ? 'active' : ''}
+                className={'dashboard' === activeItem ? 'text-orange-500' : ''}
                 href="/admin/dashboard"
               >
-                Dashboard
+                Головна
               </Link>
             </li>
             <li>
               <Link
-                className={'orders' === activeItem ? 'active' : ''}
+                className={'orders' === activeItem ? 'text-orange-500' : ''}
                 href="/admin/orders"
               >
-                Orders
+                Замовлення
               </Link>
             </li>
             <li>
               <Link
-                className={'products' === activeItem ? 'active' : ''}
+                className={'products' === activeItem ? 'text-orange-500' : ''}
                 href="/admin/products"
               >
-                Products
+                Товари
               </Link>
             </li>
             <li>
               <Link
-                className={'users' === activeItem ? 'active' : ''}
+                className={'users' === activeItem ? 'text-orange-500' : ''}
                 href="/admin/users"
               >
-                Users
+                Користувачі
               </Link>
             </li>
           </ul>

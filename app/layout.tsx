@@ -1,51 +1,45 @@
 import './globals.css'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import type {Metadata} from 'next'
+import {Inter} from 'next/font/google'
 import Providers from '@/components/Providers'
 import DrawerButton from '@/components/DrawerButton'
-import Sidebar from '@/components/Sidebar'
+import Sidebar, {SidebarItem} from '@/components/Sidebar'
 import Header from '@/components/header/Header'
+import {IoHomeOutline} from "react-icons/io5";
+import {AiOutlineShopping} from "react-icons/ai";
+import {BiCategory} from "react-icons/bi";
+import {TbTruckDelivery} from "react-icons/tb";
+import {LuPersonStanding} from "react-icons/lu";
+import SideMenu from "@/components/SideMenu";
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-  title: 'Next Amazona V2',
-  description: 'Modern ECommerce Website',
+    title: 'Next Amazona V2',
+    description: 'Modern ECommerce Website',
 }
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
+                                       children,
+                                   }: {
+    children: React.ReactNode
 }) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
+    return (
+        <html lang="en">
+        <body className={inter.className}>
         <Providers>
-          <div className="drawer">
-            <DrawerButton />
-            <div className="drawer-content">
-              <div className="min-h-screen flex flex-col">
-                <Header />
-                {children}
-                <footer className="footer footer-center p-4 bg-base-300 text-base-content">
-                  <p>
-                    Copyright © 2023 - All right reserved by Next Amazona V2
-                  </p>
-                </footer>
-              </div>
+            <div className="min-h-screen flex">
+                <div className="hidden lg:block">
+                    <SideMenu/>
+                </div>
+                <div className="flex flex-col w-full">
+                    <Header/>
+                    {children}
+                </div>
             </div>
-            <div className="drawer-side">
-              <label
-                htmlFor="my-drawer"
-                aria-label="close sidebar"
-                className="drawer-overlay"
-              ></label>
-              <Sidebar />
-            </div>
-          </div>
         </Providers>
-      </body>
-    </html>
-  )
+        </body>
+        </html>
+    )
 }

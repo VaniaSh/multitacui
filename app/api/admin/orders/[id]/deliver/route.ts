@@ -17,13 +17,6 @@ export const PUT = auth(async (...args: any) => {
 
     const order = await OrderModel.findById(params.id)
     if (order) {
-      if (!order.isPaid)
-        return Response.json(
-          { message: 'Order is not paid' },
-          {
-            status: 400,
-          }
-        )
       order.isDelivered = true
       order.deliveredAt = Date.now()
       const updatedOrder = await order.save()

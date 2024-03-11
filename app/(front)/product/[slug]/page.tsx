@@ -1,102 +1,119 @@
 import AddToCart from '@/components/products/AddToCart'
-import { convertDocToObj } from '@/lib/utils'
+import {convertDocToObj} from '@/lib/utils'
 import productService from '@/lib/services/productService'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Rating } from '@/components/products/Rating'
+import {Button} from "@/components/ui/button";
+import {MdKeyboardArrowLeft} from "react-icons/md";
 
 export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
+                                           params,
+                                       }: {
+    params: { slug: string }
 }) {
-  const product = await productService.getBySlug(params.slug)
-  if (!product) {
-    return { title: 'Product not found' }
-  }
-  return {
-    title: product.name,
-    description: product.description,
-  }
+    const product = await productService.getBySlug(params.slug)
+    if (!product) {
+        return {title: 'Product not found'}
+    }
+    return {
+        title: product.name,
+        description: product.description,
+    }
 }
 
 export default async function ProductDetails({
-  params,
-}: {
-  params: { slug: string }
+                                                 params,
+                                             }: {
+    params: { slug: string }
 }) {
-  const product = await productService.getBySlug(params.slug)
-  if (!product) {
-    return <div>Product not found</div>
-  }
-  return (
-    <>
-      <div className="my-2">
-        <Link href="/">back to products</Link>
-      </div>
-      <div className="grid md:grid-cols-4 md:gap-3">
-        <div className="md:col-span-2">
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={640}
-            height={640}
-            sizes="100vw"
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-          ></Image>
-        </div>
-        <div>
-          <ul className="space-y-4">
-            <li>
-              <h1 className="text-xl">{product.name}</h1>
-            </li>
-            <li>
-              <Rating
-                value={product.rating}
-                caption={`${product.numReviews} ratings`}
-              />
-            </li>
-            <li> {product.brand}</li>
-            <li>
-              <div className="divider"></div>
-            </li>
-            <li>
-              Description: <p>{product.description}</p>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="card  bg-base-300 shadow-xl mt-3 md:mt-0">
-            <div className="card-body">
-              <div className="mb-2 flex justify-between">
-                <div>Price</div>
-                <div>${product.price}</div>
-              </div>
-              <div className="mb-2 flex justify-between">
-                <div>Status</div>
-                <div>
-                  {product.countInStock > 0 ? 'In stock' : 'Unavailable'}
+    const product = await productService.getBySlug(params.slug)
+    if (!product) {
+        return <div>Схоже цей продукт був видалений</div>
+    }
+    return (
+        <div className="mt-3 w-full">
+            <Link className="font-semibold tracking-widest flex items-center w-full" href={'/'}><MdKeyboardArrowLeft
+                size={20}/>Назад на головну
+            </Link>
+            <div className="py-8 w-full">
+                <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row -mx-4">
+                        <div className="md:flex-1 px-4">
+                            <div className="h-[460px] rounded-lg bg-zinc-500/10 mb-4 relative">
+                                <Image fill objectFit="contain"
+                                       src={product.image}
+                                       alt={product.name}/>
+                            </div>
+                        </div>
+                        <div className="md:flex-1 px-4">
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{product.name}</h2>
+                            <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet blanditiis commodi
+                                corporis enim explicabo hic illo iusto, magni natus odio optio praesentium ratione
+                                reiciendis rem tempora, unde ut veritatis vero.
+                            </p>
+                            <div className="flex flex-col gap-y-4 mb-4">
+                                <div className="mr-4">
+                                    <span
+                                        className="text-gray-600 font-semibold ml-4 text-3xl dark:text-gray-300">{product.price} ₴</span>
+                                </div>
+                                <div>
+                                    <span className="font-bold text-gray-700 dark:text-gray-300">Наявність: </span>
+                                    <span className="text-gray-600 dark:text-gray-300">В наявності</span>
+                                </div>
+                            </div>
+                            <div className="mb-4">
+                                <span className="font-bold text-gray-700 dark:text-gray-300">Оберіть коріл</span>
+                                <div className="flex items-center mt-2">
+                                    <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2"></button>
+                                    <button className="w-6 h-6 rounded-full bg-red-500 dark:bg-red-700 mr-2"></button>
+                                    <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2"></button>
+                                    <button
+                                        className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2"></button>
+                                </div>
+                            </div>
+                            <div className="mb-4">
+                                <span className="font-bold text-gray-700 dark:text-gray-300">Оберіть Розмір</span>
+                                <div className="flex gap-x-3 items-center mt-2">
+                                    <Button
+                                        size={"icon"}>
+                                        S
+                                    </Button>
+                                    <Button
+                                        size={"icon"}>
+                                        M
+                                    </Button>
+                                    <Button
+                                        size={"icon"}>
+                                        L
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="flex gap-x-2 mb-4">
+                                <AddToCart
+                                    item={{
+                                        ...convertDocToObj(product),
+                                        qty: 0,
+                                        color: '',
+                                        size: '',
+                                    }}
+                                />
+                                <Button
+                                    variant={'outline'}
+                                >
+                                    Додати до списку бажань
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col -mx-2 mb-4">
+                        <div className="font-bold text-gray-700 dark:text-gray-300">Опис Товару:</div>
+                        <div className="text-gray-600 dark:text-gray-300 text-sm mt-2">
+                            {product.description}
+                        </div>
+                    </div>
                 </div>
-              </div>
-              {product.countInStock !== 0 && (
-                <div className="card-actions justify-center">
-                  <AddToCart
-                    item={{
-                      ...convertDocToObj(product),
-                      qty: 0,
-                      color: '',
-                      size: '',
-                    }}
-                  />
-                </div>
-              )}
             </div>
-          </div>
         </div>
-      </div>
-    </>
-  )
+    )
 }

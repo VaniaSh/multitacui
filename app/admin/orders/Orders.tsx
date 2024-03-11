@@ -10,40 +10,40 @@ export default function Orders() {
 
   return (
     <div>
-      <h1 className="py-4 text-2xl">Orders</h1>
+      <h1 className="py-4 text-2xl">Замовлення</h1>
       <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTION</th>
+        <table className="w-full">
+          <thead className="p-3">
+            <tr className='text-left bg-secondary'>
+              <th className="p-3">ID</th>
+              <th className="p-3">Користувач</th>
+              <th className="p-3">Дата</th>
+              <th className="p-3">Загалом</th>
+              <th className="p-3">Статус</th>
+              <th className="p-3">Доставка</th>
+              <th className="p-3">Дії</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-primary-foreground">
             {orders.map((order: Order) => (
               <tr key={order._id}>
-                <td>..{order._id.substring(20, 24)}</td>
-                <td>{order.user?.name || 'Deleted user'}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>${order.totalPrice}</td>
-                <td>
+                <td className="p-3">..{order._id.substring(20, 24)}</td>
+                <td className="p-3">{order.user?.name || 'Користувача було видалено'}</td>
+                <td className="p-3">{order.createdAt.substring(0, 10)}</td>
+                <td className="p-3">${order.totalPrice}</td>
+                <td className="p-3">
                   {order.isPaid && order.paidAt
                     ? `${order.paidAt.substring(0, 10)}`
-                    : 'not paid'}
+                    : 'Не оплачено'}
                 </td>
-                <td>
+                <td className="p-3">
                   {order.isDelivered && order.deliveredAt
                     ? `${order.deliveredAt.substring(0, 10)}`
-                    : 'not delivered'}
+                    : 'Не доставлено'}
                 </td>
-                <td>
+                <td className="p-3">
                   <Link href={`/order/${order._id}`} passHref>
-                    Details
+                    Детальніше
                   </Link>
                 </td>
               </tr>
