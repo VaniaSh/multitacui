@@ -107,7 +107,7 @@ const Form = () => {
                 </form>
                 <div className="text-sm">
                     Немає акаунту?{' '}
-                    <Link className="text-base hover:underline" href={`/register?callbackUrl=${callbackUrl}`}>
+                    <Link className="text-base hover:underline text-blue-600" href={`/register?callbackUrl=${callbackUrl}`}>
                         Зареєструватись
                     </Link>
                 </div>

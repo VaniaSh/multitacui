@@ -49,6 +49,8 @@ export default function ProductEditForm({ productId }: { productId: string }) {
     setValue('brand', product.brand)
     setValue('countInStock', product.countInStock)
     setValue('description', product.description)
+    setValue('colors', product.colors)
+    setValue('sizes', product.sizes)
   }, [product, setValue])
 
   const formSubmit = async (formData: any) => {
@@ -126,58 +128,64 @@ export default function ProductEditForm({ productId }: { productId: string }) {
     <div>
       <h1 className="text-2xl py-4 bg-primary-foreground px-4 mb-2 rounded mt-4">Редагувати {formatId(productId)}</h1>
       <div className="bg-primary-foreground p-3 rounded">
-        <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="w-[600px]">
-            <FormInput name="Назва товару" id="name" required />
-          </div>
-          <div className="w-[600px]">
-            <FormInput name="Slug" id="slug" required />
-          </div>
-          <div className="w-[600px]">
-            <FormInput name="Картинка" id="image" required />
-          </div>
-          <div className="md:flex mb-6">
-            <label className="label md:w-1/5" htmlFor="imageFile">
-              Загрузити Картинку
-            </label>
-            <div className="md:w-4/5">
-              <input
-                type="file"
-                className="max-w-md"
-                id="imageFile"
-                onChange={uploadHandler}
-              />
-            </div>
-          </div>
-          <div className="w-[600px]">
-            <FormInput name="Ціна" id="price" required />
-          </div>
-         <div className="w-[600px]">
-           <FormInput name="Категорія" id="category" required />
-         </div>
-         <div className="w-[600px]">
-           <FormInput name="Брент" id="brand" required />
-         </div>
-          <div className="w-[600px]">
-            <FormInput name="Опис" id="description" required />
-          </div>
-          <div className="w-[600px]">
-            <FormInput name="Кількість" id="countInStock" required />
-          </div>
-          <Button
-            type="submit"
-            disabled={isUpdating}
-            className="mr-4"
-          >
-            {isUpdating && <span className="loading loading-spinner"></span>}
-            Підтвердити
-          </Button>
-          <Button variant={'destructive'}>
-            <Link href="/admin/products">
-              Скасувати
-            </Link>
-          </Button>
-        </form>
+          <form onSubmit={handleSubmit(formSubmit)}>
+              <div className="w-[600px]">
+                  <FormInput name="Назва товару" id="name" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Slug" id="slug" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Картинка" id="image" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Колір" id="colors" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Розмір" id="sizes" required/>
+              </div>
+              <div className="md:flex mb-6">
+                  <label className="label md:w-1/5" htmlFor="imageFile">
+                      Загрузити Картинку
+                  </label>
+                  <div className="md:w-4/5">
+                      <input
+                          type="file"
+                          className="max-w-md"
+                          id="imageFile"
+                          onChange={uploadHandler}
+                      />
+                  </div>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Ціна" id="price" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Категорія" id="category" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Брент" id="brand" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Опис" id="description" required/>
+              </div>
+              <div className="w-[600px]">
+                  <FormInput name="Кількість" id="countInStock" required/>
+              </div>
+              <Button
+                  type="submit"
+                  disabled={isUpdating}
+                  className="mr-4"
+              >
+                  {isUpdating && <span className="loading loading-spinner"></span>}
+                  Підтвердити
+              </Button>
+              <Button variant={'destructive'}>
+                  <Link href="/admin/products">
+                      Скасувати
+                  </Link>
+              </Button>
+          </form>
       </div>
     </div>
   )

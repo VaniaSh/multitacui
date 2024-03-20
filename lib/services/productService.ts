@@ -33,12 +33,18 @@ const getCategories = cache(async () => {
   const categories = await ProductModel.find().distinct('category')
   return categories
 })
+const getAll = cache(async () => {
+  await dbConnect()
+  const products = await ProductModel.find({}).sort({ _id: -1 })
+  return products as Product[]
+})
 
 const productService = {
   getLatest,
   getFeatured,
   getBySlug,
   getCategories,
-  getByCategory
+  getByCategory,
+  getAll
 }
 export default productService

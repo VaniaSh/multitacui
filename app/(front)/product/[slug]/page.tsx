@@ -65,28 +65,24 @@ export default async function ProductDetails({
                             <div className="mb-4">
                                 <span className="font-bold text-gray-700 dark:text-gray-300">Оберіть коріл</span>
                                 <div className="flex items-center mt-2">
-                                    <button className="w-6 h-6 rounded-full bg-gray-800 dark:bg-gray-200 mr-2"></button>
-                                    <button className="w-6 h-6 rounded-full bg-red-500 dark:bg-red-700 mr-2"></button>
-                                    <button className="w-6 h-6 rounded-full bg-blue-500 dark:bg-blue-700 mr-2"></button>
-                                    <button
-                                        className="w-6 h-6 rounded-full bg-yellow-500 dark:bg-yellow-700 mr-2"></button>
+                                    {product && product.colors && product.colors.split(',').map((color, index) => (
+                                        <button
+                                            style={{backgroundColor: color}}
+                                            key={index}
+                                            className="w-6 h-6 rounded-full mr-2"/>
+                                    ))}
                                 </div>
                             </div>
                             <div className="mb-4">
                                 <span className="font-bold text-gray-700 dark:text-gray-300">Оберіть Розмір</span>
                                 <div className="flex gap-x-3 items-center mt-2">
-                                    <Button
-                                        size={"icon"}>
-                                        S
-                                    </Button>
-                                    <Button
-                                        size={"icon"}>
-                                        M
-                                    </Button>
-                                    <Button
-                                        size={"icon"}>
-                                        L
-                                    </Button>
+                                    {product && product.sizes && product.sizes.split(',').map((size, index) => (
+                                        <Button
+                                            key={index}
+                                            size={"icon"}>
+                                            {size}
+                                        </Button>
+                                    ))}
                                 </div>
                             </div>
                             <div className="flex gap-x-2 mb-4">
@@ -94,8 +90,8 @@ export default async function ProductDetails({
                                     item={{
                                         ...convertDocToObj(product),
                                         qty: 0,
-                                        color: '',
-                                        size: '',
+                                        color: 'S',
+                                        size: 'M',
                                     }}
                                 />
                                 <Button

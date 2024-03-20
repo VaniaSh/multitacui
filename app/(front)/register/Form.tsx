@@ -57,7 +57,7 @@ const Form = () => {
       })
       if (res.ok) {
         return router.push(
-          `/signin?callbackUrl=${callbackUrl}&success=Account has been created`
+          `/signin?callbackUrl=${callbackUrl}&success=Акаунт було створено`
         )
       } else {
         const data = await res.json()
@@ -84,7 +84,7 @@ const Form = () => {
                   type="text"
                   id="name"
                   {...register('name', {
-                    required: 'Name is required',
+                    required: 'Обовʼязкове поле',
                   })}
               />
               {errors.name?.message && (
@@ -99,13 +99,12 @@ const Form = () => {
                   type="text"
                   id="email"
                   {...register('email', {
-                    required: 'Email is required',
+                    required: 'Обовʼязкове поле',
                     pattern: {
                       value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
                       message: 'Email is invalid',
                     },
                   })}
-                  className="input input-bordered w-full max-w-sm"
               />
               {errors.email?.message && (
                   <div className="text-destructive text-[12px]"> {errors.email.message}</div>
@@ -119,9 +118,8 @@ const Form = () => {
                   type="password"
                   id="password"
                   {...register('password', {
-                    required: 'Password is required',
+                    required: 'Обовʼязкове поле',
                   })}
-                  className="input input-bordered w-full max-w-sm"
               />
               {errors.password?.message && (
                   <div className="text-destructive text-[12px]">{errors.password.message}</div>
@@ -135,13 +133,12 @@ const Form = () => {
                   type="password"
                   id="confirmPassword"
                   {...register('confirmPassword', {
-                    required: 'Confirm Password is required',
+                    required: 'Обовʼязкове поле',
                     validate: (value) => {
                       const {password} = getValues()
                       return password === value || 'паролі повинні співпадати!'
                     },
                   })}
-                  className="input input-bordered w-full max-w-sm"
               />
               {errors.confirmPassword?.message && (
                   <div className="text-destructive text-[12px]">{errors.confirmPassword.message}</div>
@@ -163,7 +160,7 @@ const Form = () => {
           <div className="divider"></div>
           <div className="text-sm">
             Маєте акаунт?{' '}
-            <Link className="text-base hover:underline" href={`/signin?callbackUrl=${callbackUrl}`}>
+            <Link className="text-base hover:underline text-blue-600" href={`/signin?callbackUrl=${callbackUrl}`}>
               Увійти
             </Link>
           </div>

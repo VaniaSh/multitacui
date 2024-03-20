@@ -36,6 +36,8 @@ export const POST = auth(async (req: any) => {
     countInStock: 0,
     description: 'Product Description',
     rating: 0,
+    sizes: "S, M, L",
+    colors: "#fff",
     numReviews: 0,
   })
   try {

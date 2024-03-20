@@ -5,6 +5,7 @@ import {GiHamburgerMenu} from "react-icons/gi";
 import {MdLogout} from "react-icons/md";
 import {signIn, signOut, useSession} from 'next-auth/react'
 import useCartService from "@/lib/hooks/useCartStore";
+import { useRouter } from "next/navigation";
 
 
 interface SidebarContextProps {
@@ -27,6 +28,7 @@ interface SidebarItemProps {
 
 export default function Sidebar({children}: SidebarProps) {
     const {items, init} = useCartService()
+    const router = useRouter()
     const [expanded, setExpanded] = useState(false)
     const {data: session} = useSession()
 
@@ -92,7 +94,7 @@ export default function Sidebar({children}: SidebarProps) {
                         </div>
                     )
                 }
-                <div className="border-t flex p-3">
+                <div onClick={() => router.push('/profile')} className="border-t flex p-3">
                     <div className="w-10 h-10 rounded-md bg-gray-300"/>
                     <div
                         className={`
